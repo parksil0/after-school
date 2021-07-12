@@ -12,8 +12,6 @@ jobs:
   deploy_live_website:
     runs-on: ubuntu-latest
     steps:
-    - name: Change Directory
-      uses: cd AFS
     - name: Checkout Repo
       uses: actions/checkout@main
     - name: Use Node.js ${{ matrix.node-version }}
