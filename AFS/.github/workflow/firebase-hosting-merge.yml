@@ -1,0 +1,40 @@
+name: Deploy to Live Channel
+
+on:
+  push:
+    branches:
+      - main
+    # Optionally configure to run only for specific files. For example:
+    # paths:
+    # - "website/**"
+
+jobs:
+  deploy_live_website:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Change Directory
+      uses: cd AFS
+    - name: Checkout Repo
+      uses: actions/checkout@main
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@main
+      with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+    - name: Install Dependencies
+      run: npm install
+    - name: Build
+      run: npm run build --if-present
+      env:
+        CI: false
+    - name: Archive Production Artifact
+      uses: actions/upload-artifact@main
+      with:
+        name: dist
+        path: dist
+    - uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: "${{ secrets.GITHUB_TOKEN }}"
+        firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_AFTER_SCHOOL_59829 }}"
+        projectId: after-school-59829
+        channelId: live
