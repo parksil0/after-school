@@ -82,6 +82,8 @@
     </ul>
     <div>
       <h1>hello!</h1>
+      <h3>feature/test 브랜치에서 작성한 텍스트</h3>
+      <button @click="sayHello()">Click Me!</button>
     </div>
   </div>
 </template>
@@ -92,6 +94,11 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  methods: {
+    sayHello () {
+      alert('hi!')
     }
   }
 }
